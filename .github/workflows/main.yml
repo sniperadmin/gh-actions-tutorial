@@ -1,0 +1,33 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Build CI  # هنا نضع اسم العملية
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on: # نستخدمها لضبط توقيت بدء العملية
+  push: # هنا تبدأ العملية عند رفع الكود على الفرع الرئيسي ماستر
+    branches: [ master ]
+  pull_request: # وهنا تبدأ العملية عند عمل طلب سحب
+    branches: [ master ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs: # كل عملية تتكون من عدة وظائف
+  # This workflow contains a single job called "build"
+  build-for-production: # هنا نعطي أي اسم يعبر عن الوظيفة التي سيقوم بها السيرفر
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest  # نظام تشغيل السيرفر، وهنا يوجد خيارات كثيرة مرفقة بالصورة أسفل الكود
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps: # هنا الخطوات أو المهمات التي سيقوم بها السيرفر
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2  # هذه الخطوة مهمة حيث تقوم بتوجيه السيرفر إلى الفولدر أو المشروع الحالي
+
+    # Runs a single command using the runners shell
+    - name: install npm  # اسم المهمة الأولى
+      run: npm i # الأمر الخاص بالمهمة الأولى
+
+    # Runs a set of commands using the runners shell
+    - name: check npm version and build  # اسم المهمة الثانية
+      run: |
+        npm --version    # الأوامر الخاصة بالمهمة الثانية
+        npm run build
